@@ -1,0 +1,6 @@
+-Lineer regresyonun iki türlüsü de tamamdýr. Bir kullanýcýnýn sýradaki alýsverisinin kac gün sonra olcagýný biliyoruz ve yine yaklasik olarak, aldýgý bir ürünü kaç gün sonra alabileceðini kestirebiliyoruz.
+-Bu iki veriyi alýp, kullanabilmek, yani son analizi yapmak için, iki dosyada da "son_hal" isminde belirtilen birer data_frame olusturdum. Burada tum tahmin bilgileri, gercek bilgiler, urunler, kullanýclar gibi bilgiler duzgun bir formatta yer alýyor.
+-Test.csv ye bir sutun eklemek durumunda kaldým, kumulatif giden gun verisi test de kumulatif girmiyordu. "Predict" komutu da kumulatif veri alýyordu. Islem karýsýklýgý cok artabilecek gibi geldigi icin sutun eklemis bulundum. Bu sebepten test.csv dosyasýný da gondriyorum.
+-Ýlk kod hýzlý, ikincisi nispeten daha aðýr (1.5 dk)
+-Tuba'nin istegi uzerini urun isimlerini de ekledim
+-Kodlarýn aciklamalari da yorum satiri olarak mevcut

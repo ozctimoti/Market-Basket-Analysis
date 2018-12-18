@@ -1,0 +1,60 @@
+#Tum kullanicilarin bir sonraki alisverisinin gununun hesaplandigi kod
+#Gunler kumulatif
+
+#Klasik import kýsmý
+trdata=read.csv("C:\\Users\\egemenisguder\\Desktop\\Market\\Train.csv")
+tsdata=read.csv("C:\\Users\\egemenisguder\\Desktop\\Market\\Test.csv")
+
+#Iki dosya icin de kullanici id leri unique olarak depolanir.
+truserlist=unique(trdata$user_id)
+tsuserlist=unique(tsdata$user_id)
+
+#Son tahminlerin tutulacagi vektor bos olarak olusturulur
+predicted_day_vector=vector()
+
+#Her bir kullanici icin onun tum alisverin gun araligi try vektörüne eklenir
+#Trx de 0 dan onun uzunluguna kadar sayilar olur
+for (i in (1:length(truserlist))){ 
+try<-c(unique(trdata$days_since_first_order[which(trdata$user_id==i)]))
+trx<-seq(0,length(try)-1)
+
+#Iki vektor bir dataframe e aktarilip regresyon modeli cikartilir.
+trregress_data<-data.frame(try, trx)
+a <- trregress_data$try
+x <- trregress_data$trx
+trlinearMod <- lm(a ~ x) 
+ 
+#N+1 inci deger anlamina gelen (length try) sayisina karsilik gelen eleman tahmin ettirilir 
+y_pred = predict(trlinearMod, data.frame(x = length(try))) 
+
+#tahminler bir vektorun sonuna eklenir
+predicted_day_vector<-append(predicted_day_vector,y_pred[[1]] )
+}
+
+#Gorsellestirme islemi icin kullanilacak os vektorler olusturulur.
+actuals<-vector()
+predicteds<-vector()
+lastuserlist<-vector()
+
+#Her train kullanicisi testte de aranir varsa
+for (i in (1:length(truserlist))){ 
+if(i %in% tsuserlist){
+
+#Tahmin edilen deger, gercek deger ve tahmin yapilan kullanici sirasiyla ilgili vektorlere atilir.
+actuals<-append(actuals,unique(tsdata$days_since_first_order[which(tsdata$user_id==i)]))
+predicteds<-append(predicteds,predicted_day_vector[i])
+lastuserlist<-append(lastuserlist,i)
+}
+}
+
+#Korelasyon sonucu ve son hal data frame olarak ekrana bastýrýlýr
+actuals_preds <- data.frame(cbind(actuals, predicteds))
+correlation_accuracy <- cor(actuals_preds)
+son_hal<-data.frame(lastuserlist, actuals,predicteds)
+print("Son Hal")
+print(head(son_hal))
+print("Basari orani total: (Korelasyon)")
+print(correlation_accuracy [1,2] )
+
+
+

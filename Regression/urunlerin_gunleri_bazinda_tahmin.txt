@@ -1,0 +1,102 @@
+#Her bir kullanici icin almis oldugu her urunun bir sonraki alýnabilecegi gunu hesaplayan kod
+#Gunler kumulatif
+
+#Kodun calismasi uzun suruyor (1.5-2 dk performansa bagli), eger ciktilari alip kullanilmak
+#istenirse son_hal isimli dataframe de duzgun sekilde mevcut
+
+#Klasik import
+trdata=read.csv("C:\\Users\\egemenisguder\\Desktop\\Market\\Train.csv")
+tsdata=read.csv("C:\\Users\\egemenisguder\\Desktop\\Market\\Test.csv")
+names=read.csv("C:\\Users\\egemenisguder\\Desktop\\Market\\Products.csv")
+
+#Iki dosya icin de kullanici id leri unique olarak depolanir.
+truserlist=unique(trdata$user_id)
+tsuserlist=unique(tsdata$user_id)
+
+#train icin kullanýlacak olan unique urun listesi
+trproductlist=unique(trdata$product_id)
+
+#Her bir kisi icin kullanilacak mini urun vektoru
+productlistforperson=vector()
+
+#Programda kullanýlan her satiri bir user ve her sutunu bir urunu temsil eden
+#Kocaman matris ici 0
+mymatrix=matrix(0,length(truserlist)  , length(trproductlist)  ) 
+
+for (i in (1:length(truserlist))){ 
+
+#Her bit train kullanicisiicin once alinan tum urunler vektorde tutulur
+productlistforperson<-c(unique(trdata$product_id[which(trdata$user_id==i)]))
+
+for (j in productlistforperson){ 
+#Listediki her bir urun icin alinan gunler vektore aktarilarak regresyon yapilir
+try<-c(trdata$days_since_first_order[intersect(which(trdata$user_id==i),which(trdata$product_id==j)    )])
+trx<-seq(0,length(try)-1)
+trregress_data<-data.frame(try, trx)
+a <- trregress_data$try
+x <- trregress_data$trx
+trlinearMod <- lm(a ~ x) 
+
+#Tahmin ancak uzunluk 2 den büyükse yani NULL ya da 0 bos degilse yapilir (Zaten degerler 
+# 3 basamakli min)
+if(length(try)>=2){
+y_pred = predict(trlinearMod, data.frame(x = length(try))) 
+
+#Tahmin matrisin ilgili yerine yazilir
+mymatrix[i,which(j == trproductlist)  ]<-y_pred[[1]]
+}
+}
+}
+
+#Gorsellestirme islemi icin kullanilacak bos vektorler olusturulur.
+actuals<-vector()
+predicteds<-vector()
+lastuserlist<-vector()
+pnames<-vector()
+availableproductids<-vector()
+
+#Tum train kullanicilari icin once testte karsiligi var mi diye bakilir
+for (i in (1:length(truserlist))){ 
+if(i %in% tsuserlist){
+
+#Testte karsiligi varsa iki dosya icin de aldigi urunlere bakilir
+productlistforperson<-c(unique(trdata$product_id[which(trdata$user_id==i)]))
+tsproductlistforperson<-c(unique(tsdata$product_id[which(tsdata$user_id==i)]))
+for (j in productlistforperson){ 
+
+#aldigi urunlerde eslesme varsa
+if(j %in% tsproductlistforperson){
+
+#Matrisin o kisi ve o urun degeri bos degilse kontrolu
+if(      mymatrix[i,which(j == trproductlist) ]!=0        ){
+
+#Testteki gercek deger okunur
+actuals<-append(actuals,tsdata$days_since_first_order[intersect(which(tsdata$user_id==i),which(tsdata$product_id==j)    )])
+
+#Tahmin edilen deger, ilgili kullanici ve urun idleri vektorlere aktarilir.
+predicteds<-append(predicteds,mymatrix[i,which(j == trproductlist) ])
+lastuserlist<-append(lastuserlist,i)
+availableproductids<-append(availableproductids,j)
+}
+}
+}
+}
+}
+
+#Korelasyon sonucu bulunur 
+actuals_preds <- data.frame(cbind(actuals, predicteds))
+correlation_accuracy <- cor(actuals_preds)
+
+#Urun idlerine karsilik gelen isimler dosyadan okunur ve vektore eklenir.
+for (i in availableproductids){
+pnames<-append(pnames,as.character(names$product_name[which(i == names$product_id)]))
+}
+
+#Korelasyon sonucu ve son hal data frame olarak ekrana bastýrýlýr
+son_hal<-data.frame(lastuserlist, availableproductids,pnames,actuals,predicteds)
+print("Son Hal")
+print(head(son_hal))
+print("Basari orani total (Korelasyon):")
+print(correlation_accuracy [1,2] )
+
+
