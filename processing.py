@@ -6,7 +6,6 @@ import numpy as np
 os.chdir('./Data/')
 
 train = pd.read_csv('./train_middle.csv', sep='\t')
-# test = pd.read_csv('./test_middle.csv', sep='\t')
 
 train['days_since_first_order'] = pd.Series((np.zeros(len(train.user_id))))
 train.days_since_first_order = train.days_since_first_order.astype(int)
@@ -27,9 +26,3 @@ for u in user_id:
 
 train.to_csv('./train.csv', sep='\t', encoding='utf-8', index=False)
 print(train)
-
-"""
-    
-    
-"""
-
