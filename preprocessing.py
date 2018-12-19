@@ -41,12 +41,6 @@ for i in range(orders.shape[0]):
     elif orders[i, 1] in test:
         test_col.append(i)
 
-'''
-prior = ((orders[:, 1] in val) & (orders[:, 2] == 'prior'))
-val = (orders[:, 1] in val & orders[:, 2] == 'train')
-test = (orders[:, 1] in test)
-'''
-
 train = orders[prior_col]
 val = orders[val_col]
 test = orders[test_col]
