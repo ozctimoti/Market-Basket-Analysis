@@ -11,10 +11,10 @@ for u in user_id:
     total_order = len(train[train.user_id == u].order_number.unique())
     arr = np.zeros((total_order, len(product_id))).astype(int)
     order_number = train[(train.user_id == u)].order_number.unique()
-    # ass_rul_df = pd.DataFrame(data=arr, index= list(range(0, total_order, 1)),columns=product_id)
     for o in order_number:
         for p in product_id:
             if not (train[(train.user_id == u) & (train.order_number == o) & (train.product_id == p)]).empty:
                 arr[o-1, product_id.index(p)] = 1
-    # TODO: Association Rules Mining for user u.
 
+    ass_rul_df = pd.DataFrame(data=arr, index= list(range(0, total_order, 1)),columns=product_id).astype(int)
+    # TODO: Association Rules Mining for user u.
