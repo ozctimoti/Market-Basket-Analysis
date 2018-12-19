@@ -28,3 +28,8 @@ for u in user_id:
 train.to_csv('./train.csv', sep='\t', encoding='utf-8', index=False)
 print(train)
 
+"""
+    
+    
+"""
+
