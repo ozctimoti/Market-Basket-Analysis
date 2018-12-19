@@ -3,4 +3,7 @@
 -Test.csv ye bir sutun eklemek durumunda kaldým, kumulatif giden gun verisi test de kumulatif girmiyordu. "Predict" komutu da kumulatif veri alýyordu. Islem karýsýklýgý cok artabilecek gibi geldigi icin sutun eklemis bulundum. Bu sebepten test.csv dosyasýný da gondriyorum.
 -Ýlk kod hýzlý, ikincisi nispeten daha aðýr (1.5 dk)
 -Tuba'nin istegi uzerini urun isimlerini de ekledim
+-Test ve Train virgulle ayrildi.
 -Kodlarýn aciklamalari da yorum satiri olarak mevcut
+-Iki kodda da 4 er tane grafik cikti olarak veriyor (Elle secildi, ornek olmasi icin)
+-0.4448925 regresyon tahmini basari oraný

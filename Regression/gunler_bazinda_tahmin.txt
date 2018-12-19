@@ -11,6 +11,9 @@ tsuserlist=unique(tsdata$user_id)
 
 #Son tahminlerin tutulacagi vektor bos olarak olusturulur
 predicted_day_vector=vector()
+predmin<-vector()
+predmax<-vector()
+
 
 #Her bir kullanici icin onun tum alisverin gun araligi try vektörüne eklenir
 #Trx de 0 dan onun uzunluguna kadar sayilar olur
@@ -25,16 +28,53 @@ x <- trregress_data$trx
 trlinearMod <- lm(a ~ x) 
  
 #N+1 inci deger anlamina gelen (length try) sayisina karsilik gelen eleman tahmin ettirilir 
-y_pred = predict(trlinearMod, data.frame(x = length(try))) 
+y_pred = predict(trlinearMod, data.frame(x = length(try)),interval="confidence") 
+
+if(i==1){
+png(file = "user_regression.png")
+par(mfrow = c(2, 2))
+plot(trx,try,xlim=c(0, (length(try)+1)),ylim=c(0, (y_pred[[1]]+10)),col = "blue",main = "Regression For User:1",
+abline(trlinearMod),cex = 1.3,pch = 16,xlab = "Orders",ylab = "Days after first order")
+points(length(try), y_pred[[1]], pch=8, col="red")
+}
+if(i==2){
+plot(trx,try,xlim=c(0, (length(try)+1)),ylim=c(0, (y_pred[[1]]+10)),col = "blue",main = "Regression For User:2",
+abline(trlinearMod),cex = 1.3,pch = 16,xlab = "Orders",ylab = "Days after first order")
+points(length(try), y_pred[[1]], pch=8, col="red")
+} 
+if(i==3){
+plot(trx,try,xlim=c(0, (length(try)+1)),ylim=c(0, (y_pred[[1]]+10)),col = "blue",main = "Regression For User:4",
+abline(trlinearMod),cex = 1.3,pch = 16,xlab = "Orders",ylab = "Days after first order")
+points(length(try), y_pred[[1]], pch=8, col="red")
+} 
+if(i==4){
+plot(trx,try,xlim=c(0, (length(try)+1)),ylim=c(0, (y_pred[[1]]+10)),col = "blue",main = "Regression For User:3",
+abline(trlinearMod),cex = 1.3,pch = 16,xlab = "Orders",ylab = "Days after first order")
+points(length(try), y_pred[[1]], pch=8, col="red")
+dev.off()
+} 
+
 
 #tahminler bir vektorun sonuna eklenir
 predicted_day_vector<-append(predicted_day_vector,y_pred[[1]] )
+if(!is.na(y_pred[[2]]) )
+{
+predmin<-append(predmin,y_pred[[2]] )
+predmax<-append(predmax,y_pred[[3]] )
+}
+else{
+predmin<-append(predmin,y_pred[[1]] )
+predmax<-append(predmax,y_pred[[1]] )
 }
 
-#Gorsellestirme islemi icin kullanilacak os vektorler olusturulur.
+}
+
+#Gorsellestirme islemi icin kullanilacak bos vektorler olusturulur.
 actuals<-vector()
 predicteds<-vector()
 lastuserlist<-vector()
+lastmin<-vector()
+lastmax<-vector()
 
 #Her train kullanicisi testte de aranir varsa
 for (i in (1:length(truserlist))){ 
@@ -44,17 +84,20 @@ if(i %in% tsuserlist){
 actuals<-append(actuals,unique(tsdata$days_since_first_order[which(tsdata$user_id==i)]))
 predicteds<-append(predicteds,predicted_day_vector[i])
 lastuserlist<-append(lastuserlist,i)
+lastmin<-append(lastmin,predmin[i])
+lastmax<-append(lastmax,predmax[i])
 }
 }
 
-#Korelasyon sonucu ve son hal data frame olarak ekrana bastýrýlýr
+#Min_max basari sonucu ve son hal data frame olarak ekrana bastýrýlýr
 actuals_preds <- data.frame(cbind(actuals, predicteds))
-correlation_accuracy <- cor(actuals_preds)
-son_hal<-data.frame(lastuserlist, actuals,predicteds)
-print("Son Hal")
-print(head(son_hal))
-print("Basari orani total: (Korelasyon)")
-print(correlation_accuracy [1,2] )
+min_max_accuracy <- mean (apply(actuals_preds, 1, min) / apply(actuals_preds, 1, max))  
+son_hal_gunler<-data.frame(lastuserlist, actuals,predicteds,lastmin,lastmax)
+print("Son Hal-Gunlere Gore")
+print(head(son_hal_gunler))
+print("Basari orani min-max:)")
+print(min_max_accuracy )
+
 
 
 
