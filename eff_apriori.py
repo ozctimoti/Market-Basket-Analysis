@@ -7,7 +7,7 @@ os.chdir('./Data')
 train = pd.read_csv('./train.csv', sep='\t')
 
 user_id = train.user_id.unique()
-for u in user_id[5:]:
+for u in user_id:
     order_number = train[(train.user_id == u)].order_number.unique()
     ass_rul_eff = []
     for o in order_number:
