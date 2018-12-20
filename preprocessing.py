@@ -85,4 +85,3 @@ test = pd.merge(val, product_val, how='inner', on=['order_id'])
 train.to_csv('./train_middle.csv', sep='\t', encoding='utf-8', index=False)
 val.to_csv('./val.csv', sep='\t', encoding='utf-8', index=False)
 test.to_csv('./test.csv', sep='\t', encoding='utf-8', index=False)
-
