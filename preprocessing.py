@@ -80,7 +80,7 @@ product_train = product_train.apply(pd.to_numeric)
 product_val = product_val.apply(pd.to_numeric)
 
 train = pd.merge(train, product_train, how='inner', on=['order_id'])
-test = pd.merge(val, product_val, how='inner', on=['order_id'])
+val = pd.merge(val, product_val, how='inner', on=['order_id'])
 
 train.to_csv('./train_middle.csv', sep='\t', encoding='utf-8', index=False)
 val.to_csv('./val.csv', sep='\t', encoding='utf-8', index=False)
