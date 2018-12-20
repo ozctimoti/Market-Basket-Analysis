@@ -2,8 +2,7 @@ import pandas as pd
 import numpy as np
 from efficient_apriori import apriori
 import os
-
-os.chdir('./Data')
+import csv
 train = pd.read_csv('./train.csv', sep='\t')
 
 user_id = train.user_id.unique()
@@ -20,12 +19,12 @@ for u in user_id:
     rules_rhs = filter(lambda rule: len(rule.lhs) == 1 and len(rule.rhs) == 1, rules)
     for rule in sorted(rules_rhs, key=lambda rule: rule.lift):
         if len(order_number) > 4:
-            strn="User id:",u,"with rule ",rule
+            strn="User id:",u," ",rule
             dataList.append(strn)
 
-with open('texting.txt', 'w') as f:
-    for item in dataList:
-        print(item)
-        f.write("%s\n" % str(item))
-    f.close()
+with open('output.csv', 'w') as f:
+    writer=csv.writer(f, delimiter="\t")
+    for i in range(len(dataList)):
+        writer.writerow([x[i] for x in dataList])
 
+    f.close()
