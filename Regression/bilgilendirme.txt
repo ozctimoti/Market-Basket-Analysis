@@ -6,4 +6,10 @@
 -Test ve Train virgulle ayrildi.
 -Kodlarýn aciklamalari da yorum satiri olarak mevcut
 -Iki kodda da 4 er tane grafik cikti olarak veriyor (Elle secildi, ornek olmasi icin)
--0.4448925 regresyon tahmini basari oraný
+-Ayrý iki dosyayý birleþtirip tek bi dosya haline getirildi.
+-Sipariþ sayýsýna göre ve ortalama sipariþ büyüklüðüne göre kullanýcý bazlý tahmin baþarý istatistikleri çýkartýldý, bunlar iki adet grafikte gösterildi.
+-Grafik çýktýlarý png formatýnda eklendi
+-ARM nin verileri sadeleþtirildi ve virgülle ayrýldý. Lütfen yen ARM verisi olursa belirlenen .csv formatýna uygun ekleyelim.
+-ARM sadece 11 eklemeyi onerdi. Onlar da basari oranýna bir etki etmedi.
+-Algoritmanýn genel basarý orana yüzde 53.5 mertebesine cikti, eslesme kontrolunde hata varmis, giderilince deger arttý.
+-Dosyalar r formtýna cevrildi.

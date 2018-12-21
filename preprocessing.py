@@ -57,7 +57,7 @@ test[test == ''] = 0.0
 test = test.astype(float).astype(int)
 
 train = pd.DataFrame(data=train, columns=['order_id', 'user_id', 'order_number', 'days_since_prior_order'])
-print(val)
+
 user_id = train.user_id.unique()
 for u in user_id:
         order_number = train[(train.user_id == u)].order_number
