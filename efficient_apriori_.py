@@ -4,7 +4,7 @@ import os
 
 os.chdir('./Data')
 
-train = pd.read_csv('./train.csv', sep='\t')
+train = pd.read_csv('./train.csv', sep=',')
 
 ass_rul_df = pd.DataFrame()
 user_id = train.user_id.unique()
@@ -23,4 +23,4 @@ for u in user_id:
             temp_df = pd.DataFrame(data=[[u, rule.lhs[0], rule.rhs[0], rule.confidence, rule.support, rule.lift]],
                                    columns=['user_id', 'rule_lhs', 'rule_rhs', 'confidence', 'support', 'lift'])
             ass_rul_df = ass_rul_df.append(temp_df, ignore_index=True)
-ass_rul_df.to_csv('./association_rules.csv', sep='\t', encoding='utf-8', index=False)
+ass_rul_df.to_csv('./association_rules.csv', sep=',', encoding='utf-8', index=False)
