@@ -1,3 +1,110 @@
+#Tum kullanicilarin bir sonraki alisverisinin gununun hesaplandigi kod
+#Gunler kumulatif
+
+#Klasik import kýsmý
+trdata=read.csv("C:\\Users\\egemenisguder\\Desktop\\Market\\Train.csv")
+tsdata=read.csv("C:\\Users\\egemenisguder\\Desktop\\Market\\Test.csv")
+
+#Iki dosya icin de kullanici id leri unique olarak depolanir.
+truserlist=unique(trdata$user_id)
+tsuserlist=unique(tsdata$user_id)
+
+#Son tahminlerin tutulacagi vektor bos olarak olusturulur
+predicted_day_vector=vector()
+predmin<-vector()
+predmax<-vector()
+
+
+#Her bir kullanici icin onun tum alisverin gun araligi try vektörüne eklenir
+#Trx de 0 dan onun uzunluguna kadar sayilar olur
+for (i in (1:length(truserlist))){ 
+try<-c(unique(trdata$days_since_first_order[which(trdata$user_id==i)]))
+trx<-seq(0,length(try)-1)
+
+#Iki vektor bir dataframe e aktarilip regresyon modeli cikartilir.
+trregress_data<-data.frame(try, trx)
+a <- trregress_data$try
+x <- trregress_data$trx
+trlinearMod <- lm(a ~ x) 
+ 
+#N+1 inci deger anlamina gelen (length try) sayisina karsilik gelen eleman tahmin ettirilir 
+y_pred = predict(trlinearMod, data.frame(x = length(try)),interval="confidence") 
+
+if(i==1){
+png(file = "user_regression.png")
+par(mfrow = c(2, 2))
+plot(trx,try,xlim=c(0, (length(try)+1)),ylim=c(0, (y_pred[[1]]+10)),col = "blue",main = "Regression For User:1",
+abline(trlinearMod),cex = 1.3,pch = 16,xlab = "Orders",ylab = "Days after first order")
+points(length(try), y_pred[[1]], pch=8, col="red")
+}
+if(i==2){
+plot(trx,try,xlim=c(0, (length(try)+1)),ylim=c(0, (y_pred[[1]]+10)),col = "blue",main = "Regression For User:2",
+abline(trlinearMod),cex = 1.3,pch = 16,xlab = "Orders",ylab = "Days after first order")
+points(length(try), y_pred[[1]], pch=8, col="red")
+} 
+if(i==3){
+plot(trx,try,xlim=c(0, (length(try)+1)),ylim=c(0, (y_pred[[1]]+10)),col = "blue",main = "Regression For User:4",
+abline(trlinearMod),cex = 1.3,pch = 16,xlab = "Orders",ylab = "Days after first order")
+points(length(try), y_pred[[1]], pch=8, col="red")
+} 
+if(i==4){
+plot(trx,try,xlim=c(0, (length(try)+1)),ylim=c(0, (y_pred[[1]]+10)),col = "blue",main = "Regression For User:3",
+abline(trlinearMod),cex = 1.3,pch = 16,xlab = "Orders",ylab = "Days after first order")
+points(length(try), y_pred[[1]], pch=8, col="red")
+dev.off()
+} 
+
+
+#tahminler bir vektorun sonuna eklenir
+predicted_day_vector<-append(predicted_day_vector,y_pred[[1]] )
+if(!is.na(y_pred[[2]]) )
+{
+predmin<-append(predmin,y_pred[[2]] )
+predmax<-append(predmax,y_pred[[3]] )
+}
+else{
+predmin<-append(predmin,y_pred[[1]] )
+predmax<-append(predmax,y_pred[[1]] )
+}
+
+}
+
+#Gorsellestirme islemi icin kullanilacak bos vektorler olusturulur.
+actuals<-vector()
+predicteds<-vector()
+lastuserlist<-vector()
+lastmin<-vector()
+lastmax<-vector()
+
+#Her train kullanicisi testte de aranir varsa
+for (i in (1:length(truserlist))){ 
+if(i %in% tsuserlist){
+
+#Tahmin edilen deger, gercek deger ve tahmin yapilan kullanici sirasiyla ilgili vektorlere atilir.
+actuals<-append(actuals,unique(tsdata$days_since_first_order[which(tsdata$user_id==i)]))
+predicteds<-append(predicteds,predicted_day_vector[i])
+lastuserlist<-append(lastuserlist,i)
+lastmin<-append(lastmin,predmin[i])
+lastmax<-append(lastmax,predmax[i])
+}
+}
+
+#Min_max basari sonucu ve son hal data frame olarak ekrana bastýrýlýr
+actuals_preds <- data.frame(cbind(actuals, predicteds))
+min_max_accuracy <- mean (apply(actuals_preds, 1, min) / apply(actuals_preds, 1, max))  
+son_hal_gunler<-data.frame(lastuserlist, actuals,predicteds,lastmin,lastmax)
+print("Son Hal-Gunlere Gore")
+print(head(son_hal_gunler))
+print("Basari orani min-max:)")
+print(min_max_accuracy )
+
+
+
+
+
+
+
+
 #Her bir kullanici icin almis oldugu her urunun bir sonraki alýnabilecegi gunu hesaplayan kod
 #Gunler kumulatif
 
@@ -172,13 +279,13 @@ kisisel_tutarlilik<-vector()
 
 for (i in unique(son_hal_urun$lastuserlist)){
 
-kisisel_tutarlilik<-append(kisisel_tutarlilik,length(intersect(son_hal_urun$availableproductids[which(son_hal_urun$lastuserlist==i)],son_liste$list_urunid[which(son_liste$list_user==i)]))    /length(which(son_hal_urun$lastuserlist==i)))
-toplam_tutarlilik=toplam_tutarlilik+length(intersect(son_hal_urun$availableproductids[which(son_hal_urun$lastuserlist==i)],son_liste$list_urunid[which(son_liste$list_user==i)]))    /length(which(son_hal_urun$lastuserlist==i))
+kisisel_tutarlilik<-append(kisisel_tutarlilik,length(intersect(son_hal_urun$availableproductids[which(son_hal_urun$lastuserlist==i)],son_liste$list_urunid[which(son_liste$list_user==i)]))    / length(union(son_hal_urun$availableproductids[which(son_hal_urun$lastuserlist==i)],son_liste$list_urunid[which(son_liste$list_user==i)]))                )
+toplam_tutarlilik=toplam_tutarlilik+length(intersect(son_hal_urun$availableproductids[which(son_hal_urun$lastuserlist==i)],son_liste$list_urunid[which(son_liste$list_user==i)]))    /length(union(son_hal_urun$availableproductids[which(son_hal_urun$lastuserlist==i)],son_liste$list_urunid[which(son_liste$list_user==i)]))             
 }
 
 basari_orani_liste=toplam_tutarlilik/length(unique(son_hal_urun$lastuserlist))
 
-print("Tum listenin son basari orani: Eslesen Urun Sayisi/Gercek Urun Sayisi")
+print("Tum listenin son basari orani: A.O.(Eslesen Urun Kumesi/Gercek Urun Kumesi)")
 print(basari_orani_liste)
 
 ordernumber<-vector()
@@ -209,20 +316,23 @@ BasariOrani_length<-append(BasariOrani_length,sum(orders_length_basari$kisisel_t
 kisisel_basari<-data.frame(SiparisSayisi,BasariOrani)
 kisisel_basari_length<-data.frame(SiparisSayisi_length,BasariOrani_length)
 
+png(file = "Siparis Sayisina Gore Basari Orani.png")
 barplot(kisisel_basari$BasariOrani,
 main = "Siparis Sayisina Gore Basari Orani",
 xlab = "Bilinen Siparis Sayisi",
 ylab = "Liste Tahmininde Basari Orani",col = "darkred",
 names.arg = kisisel_basari$SiparisSayisi
 )
+dev.off()
 
+png(file = "Ortalama Siparis Buyuklugune Gore Basari Orani.png")
 barplot(kisisel_basari_length$BasariOrani_length,
 main = "Ortalama Siparis Buyuklugune Gore Basari Orani",
 xlab = "Ortalama Siparis Buyuklugune ",
 ylab = "Liste Tahmininde Basari Orani",col = "darkred",
 names.arg = kisisel_basari_length$SiparisSayisi_length
 )
-
+dev.off()
 print("AfterARM")
 
 
@@ -271,13 +381,13 @@ kisisel_tutarlilik<-vector()
 
 for (i in unique(son_hal_urun$lastuserlist)){
 
-kisisel_tutarlilik<-append(kisisel_tutarlilik,length(intersect(son_hal_urun$availableproductids[which(son_hal_urun$lastuserlist==i)],son_liste$list_urunid[which(son_liste$list_user==i)]))    /length(which(son_hal_urun$lastuserlist==i)))
-toplam_tutarlilik=toplam_tutarlilik+length(intersect(son_hal_urun$availableproductids[which(son_hal_urun$lastuserlist==i)],son_liste$list_urunid[which(son_liste$list_user==i)]))    /length(which(son_hal_urun$lastuserlist==i))
+kisisel_tutarlilik<-append(kisisel_tutarlilik,length(intersect(son_hal_urun$availableproductids[which(son_hal_urun$lastuserlist==i)],son_liste$list_urunid[which(son_liste$list_user==i)]))    / length(union(son_hal_urun$availableproductids[which(son_hal_urun$lastuserlist==i)],son_liste$list_urunid[which(son_liste$list_user==i)]))                )
+toplam_tutarlilik=toplam_tutarlilik+length(intersect(son_hal_urun$availableproductids[which(son_hal_urun$lastuserlist==i)],son_liste$list_urunid[which(son_liste$list_user==i)]))    /length(union(son_hal_urun$availableproductids[which(son_hal_urun$lastuserlist==i)],son_liste$list_urunid[which(son_liste$list_user==i)]))             
 }
 
 basari_orani_liste=toplam_tutarlilik/length(unique(son_hal_urun$lastuserlist))
 
-print("ARM dahil Tum listenin son basari orani: Eslesen Urun Sayisi/Gercek Urun Sayisi")
+print("ARM dahil Tum listenin son basari orani: A.O.(Eslesen Urun Kumesi/Gercek Urun Kumesi)")
 print(basari_orani_liste)
 
 ordernumber<-vector()
@@ -308,18 +418,21 @@ BasariOrani_length<-append(BasariOrani_length,sum(orders_length_basari$kisisel_t
 kisisel_basari<-data.frame(SiparisSayisi,BasariOrani)
 kisisel_basari_length<-data.frame(SiparisSayisi_length,BasariOrani_length)
 
+png(file = "ARM dahil Siparis Sayisina Gore Basari Orani.png")
 barplot(kisisel_basari$BasariOrani,
 main = "ARM dahil Siparis Sayisina Gore Basari Orani",
 xlab = "Bilinen Siparis Sayisi",
 ylab = "Liste Tahmininde Basari Orani",col = "darkred",
 names.arg = kisisel_basari$SiparisSayisi
 )
+dev.off()
 
+png(file = "ARM dahil Ortalama Siparis Buyuklugune Gore Basari Orani.png")
 barplot(kisisel_basari_length$BasariOrani_length,
 main = "ARM dahil Ortalama Siparis Buyuklugune Gore Basari Orani",
 xlab = "Ortalama Siparis Buyuklugune ",
 ylab = "Liste Tahmininde Basari Orani",col = "darkred",
 names.arg = kisisel_basari_length$SiparisSayisi_length
 )
-
+dev.off()
 

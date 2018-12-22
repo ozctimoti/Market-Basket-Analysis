@@ -13,3 +13,7 @@
 -ARM sadece 11 eklemeyi onerdi. Onlar da basari oranýna bir etki etmedi.
 -Algoritmanýn genel basarý orana yüzde 53.5 mertebesine cikti, eslesme kontrolunde hata varmis, giderilince deger arttý.
 -Dosyalar r formtýna cevrildi.
+-"armdata.csv" guncellendi ve virgülle ayrýldý.
+-Basari orani hesabi duzeltidi. Basari orani ARM ile yuzde 49 a dustu.
+-Grafikler guncelledi
+-Kodu dun gece tam birlestirilememis, bugun tam birlestirildi.
