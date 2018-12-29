@@ -2,22 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ee5cd683-e6f9-46e0-8ae9-9ef526b31d8d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/test.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Data/testx.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/train.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Data/trainx.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Regression/ARM dahil Ortalama Siparis Buyuklugune Gore Basari Orani.png" beforeDir="false" afterPath="$PROJECT_DIR$/Regression/ARM dahil Ortalama Siparis Buyuklugune Gore Basari Orani.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Regression/ARM dahil Siparis Sayisina Gore Basari Orani.png" beforeDir="false" afterPath="$PROJECT_DIR$/Regression/ARM dahil Siparis Sayisina Gore Basari Orani.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Regression/Ortalama Siparis Buyuklugune Gore Basari Orani.png" beforeDir="false" afterPath="$PROJECT_DIR$/Regression/Ortalama Siparis Buyuklugune Gore Basari Orani.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Regression/Siparis Sayisina Gore Basari Orani.png" beforeDir="false" afterPath="$PROJECT_DIR$/Regression/Siparis Sayisina Gore Basari Orani.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Regression/Tum_Algoritma.r" beforeDir="false" afterPath="$PROJECT_DIR$/Regression/Tum_Algoritma.r" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/association_rules.py" beforeDir="false" afterPath="$PROJECT_DIR$/association_rules.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eff_apriori.py" beforeDir="false" afterPath="$PROJECT_DIR$/eff_apriori.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/efficient_apriori_.py" beforeDir="false" afterPath="$PROJECT_DIR$/efficient_apriori_.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/preprocessing.py" beforeDir="false" afterPath="$PROJECT_DIR$/preprocessing.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processing.py" beforeDir="false" afterPath="$PROJECT_DIR$/processing.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_analysis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Adsız 2.numbers" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Adsız.csv.numbers" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Adsız.numbers" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -113,24 +101,26 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="csv" value="5" />
-          <entry key="py" value="2" />
+          <entry key="csv" value="6" />
+          <entry key="py" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="CSV" value="5" />
-          <entry key="Python" value="2" />
+          <entry key="CSV" value="6" />
+          <entry key="Python" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="342" />
+          <entry key="csv" value="2" />
+          <entry key="py" value="379" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="342" />
+          <entry key="CSV" value="2" />
+          <entry key="Python" value="379" />
         </counts>
       </usages-collector>
     </session>
@@ -140,13 +130,36 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/preprocessing.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="167">
-              <caret line="106" lean-forward="true" selection-start-line="106" selection-end-line="106" />
+            <state relative-caret-position="252">
+              <caret line="79" selection-start-line="79" selection-end-line="79" selection-end-column="65" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/a.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="8" column="32" lean-forward="true" selection-start-line="8" selection-start-column="32" selection-end-line="8" selection-end-column="32" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Data/Sonunda.csv">
+          <provider selected="true" editor-type-id="csv-text-editor" />
+          <provider editor-type-id="csv-table-editor">
+            <state showInfoPanel="true" rowLines="3" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Data/test.csv">
           <provider selected="true" editor-type-id="csv-text-editor">
             <state>
@@ -195,10 +208,12 @@
         <option value="$PROJECT_DIR$/eff_apriori.py" />
         <option value="$PROJECT_DIR$/efficient_apriori_.py" />
         <option value="$PROJECT_DIR$/preprocessing.py" />
+        <option value="$PROJECT_DIR$/a.py" />
+        <option value="$PROJECT_DIR$/Data/Sonunda.csv" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
+  <component name="ProjectFrameBounds">
     <option name="y" value="23" />
     <option name="width" value="1440" />
     <option name="height" value="877" />
@@ -248,8 +263,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.preprocessing">
-    <configuration name="association_rules" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.a">
+    <configuration name="a" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="instacart" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -261,7 +276,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/association_rules.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/a.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -355,19 +370,19 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.association_rules" />
       <item itemvalue="Python.eff_apriori" />
       <item itemvalue="Python.test_analysis" />
       <item itemvalue="Python.efficient_apriori_" />
       <item itemvalue="Python.preprocessing" />
+      <item itemvalue="Python.a" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.a" />
         <item itemvalue="Python.preprocessing" />
         <item itemvalue="Python.efficient_apriori_" />
         <item itemvalue="Python.eff_apriori" />
         <item itemvalue="Python.test_analysis" />
-        <item itemvalue="Python.association_rules" />
       </list>
     </recent_temporary>
   </component>
@@ -375,14 +390,14 @@
     <configuration />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="877" extended-state="6" />
+    <frame x="0" y="23" width="1440" height="877" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21071176" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21071176" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3296433" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3111931" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3111931" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.399754" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -515,8 +530,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/preprocessing.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="167">
-          <caret line="106" lean-forward="true" selection-start-line="106" selection-end-line="106" />
+        <state relative-caret-position="252">
+          <caret line="79" selection-start-line="79" selection-end-line="79" selection-end-column="65" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -526,6 +544,22 @@
           <caret column="52" selection-start-column="30" selection-end-column="52" />
         </state>
       </provider>
+      <provider editor-type-id="csv-table-editor">
+        <state showInfoPanel="true" rowLines="3" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/a.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="32" lean-forward="true" selection-start-line="8" selection-start-column="32" selection-end-line="8" selection-end-column="32" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Data/Sonunda.csv">
+      <provider selected="true" editor-type-id="csv-text-editor" />
       <provider editor-type-id="csv-table-editor">
         <state showInfoPanel="true" rowLines="3" />
       </provider>
