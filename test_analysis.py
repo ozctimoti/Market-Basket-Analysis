@@ -6,7 +6,7 @@ import numpy as np
 # Path configuration
 os.chdir('./Data/')
 
-test = pd.read_csv('./test.csv', sep='\t')
+test = pd.read_csv('./testx.csv', sep='\t')
 order_number_test = []
 for u in test.user_id.unique():
     order_number_test.append(len(test[test.user_id == u].order_number.unique().tolist()))

@@ -3,7 +3,7 @@ import numpy as np
 import os
 
 os.chdir('./Data')
-train = pd.read_csv('./train.csv', sep='\t')
+train = pd.read_csv('./trainx.csv', sep='\t')
 
 user_id = train.user_id.unique()
 for u in user_id:

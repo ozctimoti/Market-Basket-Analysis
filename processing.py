@@ -24,5 +24,5 @@ for u in user_id:
             train.at[(train.user_id == u) & (train.product_id == p) & (train.order_number == o), 'days_since_first_order'] \
                 = sum(days_since_prior_order[0: o])
 
-train.to_csv('./train.csv', sep=',', encoding='utf-8', index=False)
+train.to_csv('./trainx.csv', sep=',', encoding='utf-8', index=False)
 print(train)

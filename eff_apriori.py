@@ -3,7 +3,7 @@ import numpy as np
 from efficient_apriori import apriori
 import os
 import csv
-train = pd.read_csv('./train.csv', sep='\t')
+train = pd.read_csv('./trainx.csv', sep='\t')
 
 user_id = train.user_id.unique()
 dataList=[]

@@ -4,7 +4,7 @@ import os
 
 os.chdir('./Data')
 
-train = pd.read_csv('./train.csv', sep=',')
+train = pd.read_csv('./trainx.csv', sep=',')
 
 ass_rul_df = pd.DataFrame()
 user_id = train.user_id.unique()

@@ -68,7 +68,14 @@ for u in user_id:
             train.at[(train.user_id == u) & (train.order_number == o), 'order_number'] = o - same_day
 
 val = pd.DataFrame(data=val, columns=['order_id', 'user_id', 'order_number', 'days_since_prior_order'])
-test = pd.DataFrame(data=test, columns=['order_id', 'user_id', 'order_number', 'days_since_prior_order'])
+
+train['days_since_first_order'] = pd.Series((np.zeros(len(train.user_id))))
+train.days_since_first_order = train.days_since_first_order.astype(int)
+
+
+val = pd.DataFrame(data=val, columns=['order_id', 'user_id', 'order_number', 'days_since_prior_order'])
+
+# test = pd.DataFrame(data=test, columns=['order_id', 'user_id', 'order_number', 'days_since_prior_order'])
 
 product_train = pd.read_csv('order_products__prior.csv', sep=',')
 product_val = pd.read_csv('order_products__train.csv', sep=',')
@@ -82,6 +89,32 @@ product_val = product_val.apply(pd.to_numeric)
 train = pd.merge(train, product_train, how='inner', on=['order_id'])
 val = pd.merge(val, product_val, how='inner', on=['order_id'])
 
-train.to_csv('./train_middle.csv', sep=',', encoding='utf-8', index=False)
-val.to_csv('./val.csv', sep=',', encoding='utf-8', index=False)
-test.to_csv('./test.csv', sep=',', encoding='utf-8', index=False)
+order_days_since_first_order = []
+user_id = train.user_id.unique()
+for u in user_id:
+    product_id = train[train.user_id == u].product_id.unique()
+    days_since_prior_order = []
+    for d in train[train.user_id == u].order_number.unique():
+        days_since_prior_order.append(train[(train.user_id == u) & (train.order_number == d)].days_since_prior_order.unique()[0])
+    order_days_since_first_order.append(sum(days_since_prior_order))
+    for p in product_id:
+        order_number = train[(train.user_id == u) & (train.product_id == p)].order_number
+        same_day = 0
+        last_order_sum = 0
+        for o in order_number[1:]:
+            train.at[(train.user_id == u) & (train.product_id == p) & (train.order_number == o), 'days_since_first_order'] \
+                = sum(days_since_prior_order[0: o])
+
+val['days_since_first_order'] = pd.Series((np.zeros(len(val.user_id))))
+val.days_since_first_order = val.days_since_first_order.astype(int)
+
+user_id = train.user_id.unique()
+i = 0
+for u in user_id:
+    val.at[val.user_id == u, 'days_since_first_order'] = order_days_since_first_order[i] + int(val[(val.user_id == u)].days_since_prior_order.unique()[0])
+    i += 1
+
+train.to_csv('./train.csv', sep=',', encoding='utf-8', index=False)
+val.to_csv('./test.csv', sep=',', encoding='utf-8', index=False)
+
+# test.to_csv('./test.csv', sep=',', encoding='utf-8', index=False)
